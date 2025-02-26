@@ -1,6 +1,5 @@
 import time
 import os
-import pyperclip  # Clipboard support
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import pdfplumber
@@ -21,11 +20,9 @@ def extract_and_log_pdf_text(pdf_path):
     """Extracts text from a PDF and logs it."""
     try:
         with pdfplumber.open(pdf_path) as pdf:
-            text = "\n".join(page.extract_text() or "" for page in pdf.pages)
-            text = text.strip()
+            text = "\n".join(page.extract_text() or "" for page in pdf.pages).strip()
             if text:
                 print("\n📄 Extracted Text from PDF:\n", text)
-                pyperclip.copy(text)  # Copy extracted text to clipboard
             else:
                 print("⚠️ No extractable text found in the PDF.")
     except Exception as e:
